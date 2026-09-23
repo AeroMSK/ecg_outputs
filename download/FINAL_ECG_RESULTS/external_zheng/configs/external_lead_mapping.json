@@ -1,0 +1,61 @@
+{
+  "external_lead_order": [
+    "I",
+    "II",
+    "III",
+    "aVR",
+    "aVL",
+    "aVF",
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6"
+  ],
+  "canonical_cpsc_order": [
+    "I",
+    "II",
+    "III",
+    "aVR",
+    "aVL",
+    "aVF",
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6"
+  ],
+  "mapping": {
+    "I": "I",
+    "II": "II",
+    "III": "III",
+    "aVR": "aVR",
+    "aVL": "aVL",
+    "aVF": "aVF",
+    "V1": "V1",
+    "V2": "V2",
+    "V3": "V3",
+    "V4": "V4",
+    "V5": "V5",
+    "V6": "V6"
+  },
+  "mapping_type": "identity (verified on all 45,150 intact headers)",
+  "duplicates": 0,
+  "unknown_leads": 0,
+  "final_order": [
+    "I",
+    "II",
+    "III",
+    "aVR",
+    "aVL",
+    "aVF",
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6"
+  ]
+}

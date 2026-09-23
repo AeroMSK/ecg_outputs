@@ -1,0 +1,20 @@
+skills/
+node_modules/
+scripts/.gh_env
+.env
+
+# Large binary artifacts (not committed - kept locally only)
+ECG_CPSC2018/datasets/zheng_archive_parts/*.zip
+*.pth
+*.npy
+*.npz
+*.pt
+*.ckpt
+*.hist.json
+ECG_CPSC2018/notebooks/ECG_CPSC2018_FINAL_EXECUTED_cpu_final_ext.ipynb
+ECG_CPSC2018/notebooks/ECG_CPSC2018_FINAL_EXECUTED_mini.ipynb
+download/FINAL_ECG_RESULTS/checkpoints/
+download/FINAL_ECG_RESULTS/predictions/
+download/FINAL_ECG_RESULTS_smoke_backup/
+download/logs/
+work/

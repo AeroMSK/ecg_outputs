@@ -1,0 +1,12 @@
+\begin{table}[htbp]\centering\caption{Morphology preservation (mean over stratified test subset; lead II).}\label{tab:morph}
+\begin{tabular}{lrrrrrrrrr}
+\toprule
+system & prd_mean & snr_mean & corr_mean & det_rate_mean & displace_ms_mean & rri_err_ms_mean & hr_err_bpm_mean & amp_err_mean & width_err_ms_mean \\
+\midrule
+clean->FixedDWT (purification damage) & 5.831600 & 24.810900 & 0.998300 & 1.000000 & 0.166700 & 0.000000 & 0.000000 & 0.082800 & 0.594300 \\
+clean->adversarial (attack damage) & 2.895500 & 30.765700 & 0.999600 & 1.000000 & 0.000000 & 0.000000 & 0.000000 & 0.029200 & 0.000000 \\
+clean->adversarial->FixedDWT (mitigated) & 6.497200 & 23.818400 & 0.997900 & 1.000000 & 0.166700 & 0.000000 & 0.000000 & 0.091700 & 0.414800 \\
+adversarial->FixedDWT (purification of adv) & 5.833300 & 24.804800 & 0.998300 & 1.000000 & 0.166700 & 0.000000 & 0.000000 & 0.082800 & 0.414800 \\
+\bottomrule
+\end{tabular}
+\end{table}

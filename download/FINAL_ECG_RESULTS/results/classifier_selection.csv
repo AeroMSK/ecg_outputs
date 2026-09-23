@@ -1,0 +1,2 @@
+candidate,vt_auc,vt_f1,vs_auc,vs_f1,vs_p,vs_r,epochs,max_epochs,f1_SR,f1_AF,f1_IAVB,f1_LBBB,f1_RBBB,f1_PAC,f1_PVC,f1_STD,f1_STE
+control,0.9451,0.6651,0.9473,0.6906,0.6565,0.8247,3,3,0.6538,0.8636,0.9315,0.9565,0.8538,0.3542,0.6462,0.7059,0.25

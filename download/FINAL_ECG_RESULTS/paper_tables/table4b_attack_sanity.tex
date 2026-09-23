@@ -1,0 +1,11 @@
+\begin{table}[htbp]\centering\caption{Attack-strength sanity ladder and gradient-masking checks (stratified subsets).}\label{tab:sanity}
+\begin{tabular}{lrrrrrr}
+\toprule
+system & steps & auc_1restart & auc_3restarts & auc_random_same_eps & restart_gap & pgd_vs_random_gap \\
+\midrule
+none & 8 & 0.900600 & 0.900500 & 0.955700 & 0.000100 & 0.055100 \\
+AWARD & 8 & 0.909800 & 0.909000 & 0.955900 & 0.000800 & 0.046100 \\
+PGD-AT & 8 & 0.922000 & 0.922000 & 0.951700 & 0.000000 & 0.029700 \\
+\bottomrule
+\end{tabular}
+\end{table}

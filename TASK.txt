@@ -1,0 +1,2150 @@
+============================================================
+MASTER EXECUTION PROMPT — ECG CPSC2018 + ZHENG
+HIGH-PERFORMANCE FINAL OPTIMIZATION VERSION
+============================================================
+
+ROLE
+============================================================
+
+You are acting as the senior ML/research implementation engineer responsible for
+producing the strongest scientifically valid final ECG classification system.
+
+This is a research-grade implementation.
+
+You must not merely suggest modifications.
+
+You must:
+
+    AUDIT
+      ->
+    IMPLEMENT
+      ->
+    RUN
+      ->
+    INSPECT
+      ->
+    DIAGNOSE
+      ->
+    DEBUG
+      ->
+    RERUN
+      ->
+    VALIDATE
+      ->
+    FREEZE
+      ->
+    FULL EXECUTION
+      ->
+    PACKAGE
+
+The goal is to maximize classification performance on:
+
+1. CPSC2018
+2. Zheng / Chapman-Shaoxing-Ningbo
+
+while preserving strict scientific validity.
+
+============================================================
+CURRENT NOTEBOOK
+============================================================
+
+The current canonical notebook is:
+
+    ECG_CPSC2018_FINAL_EXTERNAL_VALIDATION_PUBLICATION_READY (2).ipynb (it in the google drive link)
+
+Modify the existing notebook.
+
+DO NOT start an unrelated implementation.
+
+Preserve all scientifically important existing components unless there is
+a validated reason to improve them.
+
+============================================================
+DATASET SOURCE — REQUIRED
+============================================================
+
+The dataset ZIPs are available in the user's Google Drive:
+
+https://drive.google.com/drive/folders/1F8ZB1A5umCS0mYWf48T7OyrnYEx1NNs0
+
+The Google Drive contains:
+
+    1. ECG_CPSC2018_FINAL_EXTERNAL_VALIDATION_PUBLICATION_READY (2).ipynb
+
+    2. CPSC.zip
+
+    3. a-large-scale-12-lead-electrocardiogram-database-for-arrhythmia-study-1.0.0.zip
+    
+
+Use these exact source files.
+
+Do not silently substitute another CPSC dataset.
+
+Do not silently use CPSC-Extra.
+
+Do not use a different Zheng archive.
+
+Verify dataset identity before training.
+
+============================================================
+NON-NEGOTIABLE GOLDEN CPSC RESULT
+============================================================
+
+The protected canonical CPSC reference is:
+
+    Macro-AUC       = 0.9714
+    Macro-F1        = 0.8330
+    Macro-Precision = 0.8398
+    Macro-Recall    = 0.8336
+    Macro-AP        = 0.8883
+    ECE             = 0.0316
+    Brier           = 0.0291
+
+This is the GOLDEN CPSC reference.
+
+It MUST NEVER be overwritten.
+
+Create an immutable copy containing:
+
+    checkpoint(s)
+    configuration
+    thresholds
+    split IDs
+    predictions
+    metrics
+    preprocessing configuration
+    model configuration
+    SHA256 hashes
+    provenance
+
+The golden directory must never be modified.
+
+============================================================
+CURRENT REPLICA WARNING
+============================================================
+
+The most recent notebook execution was a reduced-compute replica.
+
+It produced approximately:
+
+    Macro-AUC = 0.9725
+    Macro-F1  = 0.8144
+
+and it explicitly does NOT exactly match the canonical
+0.9714 / 0.8330 result.
+
+Therefore:
+
+DO NOT assume the current replica is the canonical model.
+
+FIRST RECOVER THE EXACT CANONICAL full-budget checkpoints/configuration.
+
+============================================================
+PRIMARY GOALS
+============================================================
+
+PRIMARY CPSC TARGET:
+
+    Macro-AUC >= 0.9800
+    Macro-F1  >= 0.8500
+
+Minimum acceptable CPSC safety requirement:
+
+    Macro-F1 should not be intentionally reduced below the protected
+    canonical 0.8330 reference.
+
+TARGET CPSC WEAK CLASS IMPROVEMENT:
+
+    PAC
+    PVC
+    STD
+    STE
+    SR
+
+must receive special attention.
+
+EXTERNAL TARGET:
+
+    Macro-AUC >= 0.9700
+    Macro-F1  ~= 0.80 or better
+
+IMPORTANT:
+
+These are optimization targets, NOT guaranteed outcomes.
+
+If the targets cannot be reached through valid experiments:
+
+    keep the strongest scientifically valid result,
+    never fabricate,
+    never tune on test,
+    never manipulate labels,
+    never cherry-pick unexplained test outcomes.
+
+============================================================
+CRITICAL FIRST TASK — RECOVER CANONICAL SYSTEM
+============================================================
+
+Before introducing architecture changes:
+
+1. Search all available files/checkpoints/configs.
+2. Identify exactly which checkpoint generated:
+       0.9714 AUC
+       0.8330 F1
+3. Recover:
+       exact architecture
+       exact weights
+       exact seeds
+       exact ensemble
+       exact K
+       exact aggregation
+       exact thresholds
+       exact preprocessing
+       exact augmentation
+       exact loss
+       exact training recipe
+4. Hash all recovered files.
+5. Save immutable golden bundle.
+6. Re-run the canonical system on the FULL external dataset.
+
+Do NOT optimize the external branch until this is completed.
+
+============================================================
+DIAGNOSIS 1 — CURRENT PREPROCESSING
+============================================================
+
+Current preprocessing is approximately:
+
+    physical mV
+      ->
+    500 Hz -> 100 Hz
+      ->
+    0.5–40 Hz Butterworth
+      ->
+    10-second window
+      ->
+    per-lead z-normalization
+
+This is useful for rhythm classification.
+
+However, per-window z-normalization can suppress absolute amplitude information
+that may be useful for ST-segment depression/elevation.
+
+Therefore, DO NOT replace the current preprocessing.
+
+Instead implement a dual-view system.
+
+============================================================
+FIXES FOR DIAGNOSIS 1
+============================================================
+
+VIEW A — RHYTHM VIEW
+
+Preserve:
+
+    0.5–40 Hz
+    100 Hz
+    per-lead z-normalization
+
+VIEW B — MORPHOLOGY/ST VIEW
+
+Test:
+
+    0.05–40 Hz
+    0.05–45 Hz
+    optionally 0.05–50 Hz
+
+Use amplitude-preserving normalization such as:
+
+    robust percentile normalization
+    training-set scaling
+    carefully designed per-record robust scaling
+
+Do NOT simply z-normalize the ST branch.
+
+Test these variants on CPSC validation first.
+
+Only promote them if validation improves.
+
+============================================================
+DIAGNOSIS 2 — CURRENT GLOBAL LEAD WEIGHTING
+============================================================
+
+The current global lead-weighting mechanism uses per-lead mean/std.
+
+After z-normalization these values are nearly constant.
+
+Therefore the current "global" lead gate is not strongly input-dependent.
+
+============================================================
+FIXES FOR DIAGNOSIS 2
+============================================================
+
+Implement a genuinely input-dependent lead-attention module.
+
+Candidate features:
+
+    skewness
+    kurtosis
+    derivative energy
+    high-frequency energy
+    low-frequency energy
+    QRS-band energy
+    ST-band energy
+    temporal variance
+    cross-lead correlations
+
+Candidate modules:
+
+    lightweight lead attention
+    lead-token self-attention
+    small lead transformer
+    gated lead attention
+
+Do not build an unnecessarily huge transformer.
+
+Keep it lightweight.
+
+============================================================
+DIAGNOSIS 3 — GLOBAL AVERAGE POOLING
+============================================================
+
+The current model uses global temporal average pooling.
+
+This can dilute sparse PAC/PVC events.
+
+Rare ectopic events may occupy only a small part of a 10-second record.
+
+============================================================
+FIXES FOR DIAGNOSIS 3
+============================================================
+
+Implement:
+
+    gated temporal attention pooling
+
+and compare against:
+
+    average pooling
+    attention pooling
+    gated attention
+    top-k temporal pooling
+    average + attention concatenation
+
+Preferred first candidate:
+
+    average pooled representation
+    +
+    gated temporal attention representation
+
+then concatenate before classification.
+
+============================================================
+DIAGNOSIS 4 — MODEL CAPACITY / UNDERTRAINING
+============================================================
+
+The current reduced-compute candidate runs were generally around
+10–11 epochs.
+
+This is not sufficient for a serious final optimization search.
+
+============================================================
+FIXES FOR DIAGNOSIS 4
+============================================================
+
+Use available GPU/HPC resources.
+
+For serious candidates:
+
+    max_epochs = 40–80
+    early_stopping_patience = 10–15
+
+Use:
+
+    mixed precision
+    AdamW
+    warmup
+    cosine decay OR OneCycle
+    gradient clipping
+    EMA weights where appropriate
+
+Use larger batches when GPU memory permits.
+
+Do not blindly force maximum epochs.
+
+Checkpoint on val_tune.
+
+Never use val_select or test for early stopping.
+
+============================================================
+DIAGNOSIS 5 — AUGMENTATION
+============================================================
+
+Current augmentation includes:
+
+    amplitude scaling
+    baseline wander
+    Gaussian noise
+    occasional lead dropout
+
+This is useful but the same augmentation should not necessarily be applied
+equally to rhythm and ST morphology branches.
+
+============================================================
+FIXES FOR DIAGNOSIS 5
+============================================================
+
+RHYTHM BRANCH:
+
+    mild amplitude scaling
+    mild noise
+    mild baseline wander
+    lead dropout
+    short time shifts
+    random windows
+
+MORPHOLOGY/ST BRANCH:
+
+    weaker/no baseline wander
+    mild amplitude perturbation
+    realistic noise
+    lead masking
+    small temporal masking
+
+Add carefully:
+
+    temporal masking
+    short contiguous masking
+    mild frequency masking
+
+Avoid aggressive time warping that alters rhythm timing.
+
+All augmentations must be physiologically plausible.
+
+============================================================
+DIAGNOSIS 6 — LOSS
+============================================================
+
+Current baseline uses weighted BCE with square-root class weights.
+
+The notebook already contains additional losses but they were not exhaustively
+tested under a serious GPU budget.
+
+============================================================
+FIXES FOR DIAGNOSIS 6
+============================================================
+
+Evaluate:
+
+    A. WBCE sqrt
+    B. WBCE 0.60x
+    C. ASL
+    D. BCE + soft-F1
+    E. BCE + pairwise ranking loss
+    F. ASL + small ranking component
+
+For ranking loss prioritize:
+
+    PAC
+    PVC
+    STD
+    STE
+
+The ranking component must remain small enough not to destroy calibration.
+
+Do not use test performance to choose the loss.
+
+============================================================
+DIAGNOSIS 7 — THRESHOLD / CALIBRATION
+============================================================
+
+The current replica used global 0.5 thresholds.
+
+Macro-AUC is already high while macro-F1 is lower.
+
+This strongly motivates a better decision layer.
+
+============================================================
+FIXES FOR DIAGNOSIS 7
+============================================================
+
+Fit calibration ONLY using val_tune.
+
+Test on val_select.
+
+Candidates:
+
+    global 0.5
+    per-class F1 threshold
+    per-class F2 threshold
+    recall-constrained threshold
+    classwise temperature scaling
+    classwise logit-bias calibration
+    temperature + threshold optimization
+
+Use regularization so the calibration does not overfit val_tune.
+
+Selection:
+
+    fit on val_tune
+    rank candidates on val_select
+    FREEZE
+    test once
+
+Do not calibrate using test.
+
+============================================================
+DIAGNOSIS 8 — RANDOM WINDOW TRAINING
+============================================================
+
+Random-window training improved validation relative to several alternatives
+in the current study.
+
+Therefore retain it as a serious candidate.
+
+============================================================
+FIXES FOR DIAGNOSIS 8
+============================================================
+
+Train candidate models with random temporal windows.
+
+Then evaluate on CPSC validation:
+
+    K=1
+    K=3
+    K=5
+    K=7
+
+Aggregation candidates:
+
+    mean
+    median
+    top-k
+    attention-weighted aggregation
+
+The multi-window inference policy must be chosen only from validation.
+
+For robustness evaluation, attack the true aggregated system.
+
+Do not attack a single-window surrogate if the final clean system is multi-window.
+
+============================================================
+DIAGNOSIS 9 — 200 Hz / HIGHER TEMPORAL RESOLUTION
+============================================================
+
+The current model compresses 500 Hz ECG to 100 Hz.
+
+This is computationally efficient but may discard subtle high-frequency
+morphology relevant to ectopic beats and fine QRS structure.
+
+============================================================
+FIXES FOR DIAGNOSIS 9
+============================================================
+
+Test:
+
+    100 Hz baseline
+    200 Hz candidate
+
+Do not immediately switch the final model.
+
+Train a serious 200 Hz candidate with the same dual-view and attention strategy.
+
+Promote only if validation improves.
+
+If GPU permits, keep the 100 Hz and 200 Hz models as heterogeneous ensemble members.
+
+============================================================
+DIAGNOSIS 10 — HETEROGENEOUS ENSEMBLE
+============================================================
+
+Current ensemble improvement comes mainly from averaging three seeds of similar
+models.
+
+Do better.
+
+============================================================
+FIXES FOR DIAGNOSIS 10
+============================================================
+
+Create candidate ensemble members:
+
+    Model A:
+        current architecture
+
+    Model B:
+        temporal-attention architecture
+
+    Model C:
+        dual-view morphology architecture
+
+    Model D:
+        200 Hz morphology/rhythm model
+
+    Model E:
+        SSL-pretrained encoder
+
+Use at least three seeds for serious finalists.
+
+Learn non-negative ensemble weights that sum to 1.
+
+Fit weights using val_tune.
+
+Select ensemble on val_select.
+
+Do not use test for ensemble weighting.
+
+============================================================
+DIAGNOSIS 11 — SELF-SUPERVISED LEARNING
+============================================================
+
+Use unlabeled ECG to improve representation quality.
+
+The ECG literature supports self-supervised contrastive and masked modeling
+for generalizable 12-lead ECG representations.
+
+============================================================
+FIXES FOR DIAGNOSIS 11
+============================================================
+
+Add an optional SSL pretraining branch.
+
+Pretraining data:
+
+    all usable CPSC ECG
+    all 45,152 Zheng ECGs as UNLABELED signals
+
+Possible pretraining tasks:
+
+    contrastive learning
+    masked temporal modeling
+    masked lead prediction
+    latent prediction
+
+Preferred:
+
+    ECG-specific contrastive + masked-lead representation learning
+
+Then:
+
+    SSL pretraining
+       ->
+    supervised CPSC fine-tuning
+
+Do not let external labels enter the SSL process.
+
+Keep a separate record:
+
+    STRICT_ZERO_SHOT_MODEL
+    SSL_DOMAIN_GENERALIZED_MODEL
+
+============================================================
+DIAGNOSIS 12 — EXTERNAL DOMAIN SHIFT
+============================================================
+
+The external result has:
+
+    Macro-AUC = 0.8835
+    Macro-F1  = 0.5427
+
+Weak external classes include:
+
+    STD AUC .7027
+    PVC AUC .8325
+    PAC AUC .8482
+    STE AUC .8221
+    LBBB AUC .8812
+
+This demonstrates that external degradation is not merely threshold-related.
+
+============================================================
+FIXES FOR DIAGNOSIS 12
+============================================================
+
+Create an explicit domain-shift diagnostics stage.
+
+Compare CPSC vs Chapman vs Ningbo:
+
+    lead amplitude
+    RMS
+    SNR
+    PSD
+    low-frequency power
+    QRS-band power
+    ST-band power
+    HR
+    RR variability
+    R-peak amplitude
+    lead correlations
+    noise level
+    clipping
+    quality indicators
+
+Generate:
+
+    domain_shift_report.csv
+    domain_shift_figures
+
+Also stratify external classification performance by signal-quality quartiles.
+
+============================================================
+DIAGNOSIS 13 — UNSUPERVISED DOMAIN ADAPTATION
+============================================================
+
+Strict zero-shot must remain unchanged.
+
+But a second scientifically valid external track should use external ECG
+signals without labels.
+
+============================================================
+FIXES FOR DIAGNOSIS 13
+============================================================
+
+Track B — UNSUPERVISED DOMAIN ADAPTATION
+
+Try:
+
+    target-stat BatchNorm
+    domain-specific BatchNorm
+    source+target BatchNorm
+    CORAL feature alignment
+    unlabeled target SSL adaptation
+    EMA teacher pseudo-labeling
+    conservative entropy minimization
+
+No external labels may be used in this track.
+
+Every technique must be documented as:
+
+    unsupervised domain adaptation
+
+not zero-shot.
+
+============================================================
+DIAGNOSIS 14 — SUPERVISED EXTERNAL ADAPTATION
+============================================================
+
+The strongest route toward the requested external AUC/F1 target is likely
+supervised cross-domain adaptation.
+
+But it must be separated from the strict zero-shot experiment.
+
+============================================================
+FIXES FOR DIAGNOSIS 14
+============================================================
+
+Track C — SUPERVISED CROSS-DOMAIN ADAPTATION
+
+Primary design:
+
+    CPSC = source supervised dataset
+    Chapman-Shaoxing = adaptation/training
+    Ningbo = untouched external evaluation
+
+Secondary reverse direction:
+
+    CPSC = source
+    Ningbo = adaptation
+    Chapman = evaluation
+
+Use:
+
+    shared backbone
+    small domain adapter
+    class-balanced sampling
+    calibrated 9-class head
+
+Protect source performance using:
+
+    CPSC replay loss
+    knowledge distillation from golden CPSC model
+    feature consistency loss
+
+Do not allow the adapted model to destroy source performance.
+
+============================================================
+DIAGNOSIS 15 — JOINT CPSC + EXTERNAL TRAINING
+============================================================
+
+A stronger domain-adaptive model may benefit from mixed-domain supervised training.
+
+============================================================
+FIXES FOR DIAGNOSIS 15
+============================================================
+
+Track D:
+
+    CPSC labeled
+    +
+    Chapman labeled 9-class harmonized subset
+
+Train jointly using:
+
+    domain indicator
+    shared encoder
+    domain-specific adapter
+    source replay
+    balanced sampling
+    calibration
+
+Evaluate:
+
+    CPSC test
+    Ningbo held-out cohort
+
+This must be labeled as:
+
+    cross-domain supervised adaptation
+
+not zero-shot.
+
+============================================================
+DIAGNOSIS 16 — EXTERNAL LABEL HARMONIZATION
+============================================================
+
+The current 13-code SNOMED mapping is conservative and scientifically safe.
+
+Do not loosen it simply to increase metrics.
+
+============================================================
+FIXES FOR DIAGNOSIS 16
+============================================================
+
+Create:
+
+    Mapping A:
+        exact conservative mapping
+        PRIMARY ZERO-SHOT
+
+    Mapping B:
+        expanded only for documented clinical/SNOMED equivalence
+        ADAPTATION TRACK ONLY
+
+Do not add classes based on:
+
+    visual similarity
+    approximate terminology
+    guessed equivalence
+
+Save both mapping tables and hashes.
+
+============================================================
+DIAGNOSIS 17 — USE OF ALL 45,152 EXTERNAL RECORDS
+============================================================
+
+Only 15,614 records are currently evaluable for the 9-class target task.
+
+Do not pretend all 45,152 are labeled for the nine-class score.
+
+However, the remaining records are still useful for representation learning.
+
+============================================================
+FIXES FOR DIAGNOSIS 17
+============================================================
+
+Use:
+
+    all 45,152 external signals
+    for SSL / domain alignment / representation learning
+
+Use:
+
+    15,614 mapped records
+    for 9-class supervised adaptation/evaluation
+
+Do not assign fake labels to the 29,538 excluded records.
+
+============================================================
+DIAGNOSIS 18 — PAC/PVC EVENT LOCALIZATION
+============================================================
+
+Rare ectopic events can be diluted in whole-record representation.
+
+============================================================
+FIXES FOR DIAGNOSIS 18
+============================================================
+
+Add an optional event-aware training strategy based only on signal-derived
+information, NOT target labels.
+
+Use:
+
+    R-peak detection
+    beat-centered local crops
+    short context windows
+    multi-scale beat windows
+
+For training:
+
+    random record window
+    +
+    random R-peak-centered window
+
+Do not select beats using their class labels.
+
+This is intended to improve PAC/PVC representation.
+
+============================================================
+DIAGNOSIS 19 — TIME-FREQUENCY BRANCH
+============================================================
+
+If dual-view temporal models do not improve sufficiently, evaluate a lightweight
+time-frequency branch.
+
+============================================================
+FIXES FOR DIAGNOSIS 19
+============================================================
+
+Candidate:
+
+    1D temporal branch
+       +
+    compact STFT/spectrogram branch
+       ->
+    feature fusion
+       ->
+    classifier
+
+Do not use a huge 2D network.
+
+Only promote if validation demonstrates a real gain.
+
+============================================================
+SELECTION PROTOCOL — ABSOLUTE REQUIREMENT
+============================================================
+
+The protocol must remain:
+
+    TRAIN
+      ->
+    VAL_TUNE
+      ->
+    VAL_SELECT
+      ->
+    FREEZE
+      ->
+    TEST
+      ->
+    EXTERNAL
+
+VAL_TUNE MAY be used for:
+
+    training monitoring
+    threshold fitting
+    calibration fitting
+    ensemble weight fitting
+
+VAL_SELECT MAY be used for:
+
+    candidate ranking
+    candidate selection
+
+VAL_SELECT MUST NOT be used for:
+
+    model training
+    early stopping
+    checkpoint selection
+    repeated architecture tuning after seeing results
+    threshold fitting
+
+TEST MUST NOT be used for:
+
+    architecture tuning
+    loss tuning
+    augmentation tuning
+    threshold tuning
+    ensemble weighting
+    preprocessing tuning
+    external model selection
+    AWARD tuning
+
+The existing notebook already follows this discipline.
+Preserve and strengthen it.
+
+============================================================
+CPSC PROMOTION RULE
+============================================================
+
+Use validation-based promotion.
+
+Primary selection target:
+
+    Macro-F1
+
+Safeguards:
+
+    Macro-AUC
+    Macro-Precision
+    Macro-Recall
+
+Preferred candidate:
+
+    higher Macro-F1
+    while maintaining or improving AUC
+
+Do not promote a model that improves one weak class while causing
+large deterioration of macro-level performance.
+
+Also preserve the immutable golden system in parallel.
+
+============================================================
+EXTERNAL TRACKS
+============================================================
+
+The final notebook must clearly distinguish:
+
+TRACK A:
+    STRICT ZERO-SHOT
+    CPSC frozen
+    no external labels used for training
+    no external labels used for threshold selection
+
+TRACK B:
+    UNSUPERVISED DOMAIN ADAPTATION
+    external signals may be used unlabeled
+
+TRACK C:
+    SUPERVISED DOMAIN ADAPTATION
+    labeled Chapman/Ningbo used according to predeclared split
+
+TRACK D:
+    JOINT CPSC + EXTERNAL SUPERVISED MODEL
+
+Never mix these tracks in one headline number.
+
+============================================================
+FINAL PERFORMANCE OBJECTIVE
+============================================================
+
+Search toward:
+
+CPSC:
+
+    AUC >= 0.98
+    F1  >= 0.85
+
+External:
+
+    AUC >= 0.97
+    F1  ~= 0.80
+
+But do not fabricate or force the metric.
+
+The notebook must report the strongest reproducible result actually obtained.
+
+============================================================
+ROBUSTNESS
+============================================================
+
+Preserve:
+
+    no defense
+    FixedDWT
+    AWARD
+
+Evaluate:
+
+    standard PGD
+    adaptive PGD
+    MI-PGD
+    wavelet-domain attack
+    HF/LF attack where retained
+
+Attack the true final end-to-end system.
+
+If multi-window is selected:
+
+    attack the real aggregated model.
+
+If defense is selected:
+
+    gradients must pass through the actual defense.
+
+No fake adaptive attack.
+
+============================================================
+AWARD
+============================================================
+
+AWARD is a robustness candidate, not automatically the final classifier.
+
+Preserve:
+
+    AWARD
+    FixedDWT
+    no-defense control
+
+Select a defense only using validation.
+
+Do not degrade clean CPSC classification unnecessarily.
+
+============================================================
+MORPHOLOGY
+============================================================
+
+For the final selected defense/model report:
+
+    PRD
+    SNR
+    correlation
+    R-peak detection
+    R-peak displacement
+    RR error
+    HR error
+    QRS amplitude error
+    QRS width error
+
+Generate real executed waveform examples:
+
+    clean
+    adversarial
+    purified
+
+============================================================
+STATISTICS
+============================================================
+
+Final CPSC:
+
+    per-class metrics
+    macro metrics
+    seed mean/std
+    record-level bootstrap 95% CI
+    OOF evidence
+
+Final external:
+
+    per-class metrics
+    macro metrics
+    cohort-specific diagnostics
+    record-level bootstrap 95% CI
+
+Bootstrap the correct independence unit.
+
+Do not bootstrap correlated windows as independent records.
+
+============================================================
+REPRODUCIBILITY
+============================================================
+
+Use at least:
+
+    seed 42
+    seed 43
+    seed 44
+
+For final strongest candidates preferably test:
+
+    seed 45
+    seed 46
+
+Each seed must use:
+
+    fresh model
+    fresh optimizer
+    fresh DataLoader
+    fresh sampler
+    fresh augmentation RNG
+    fresh temporal-window RNG
+
+============================================================
+COMPUTE
+============================================================
+
+Use GPU/HPC resources aggressively.
+
+Detect:
+
+    CUDA
+    GPU memory
+    mixed-precision availability
+
+Use:
+
+    AMP
+    efficient dataloading
+    pinned memory
+    appropriate workers
+    checkpoint resume
+
+Do not artificially restrict the final experiment to the previous CPU budget.
+
+The previous CPU run was a reduced-compute replica.
+
+This final experiment must be the FULL-BUDGET run.
+
+============================================================
+EXPERIMENT SEARCH POLICY
+============================================================
+
+Do NOT run a blind enormous grid.
+
+Use a staged high-ROI search.
+
+STAGE A:
+    canonical recovery
+
+STAGE B:
+    CPSC architecture candidates
+
+STAGE C:
+    preprocessing candidates
+
+STAGE D:
+    losses/calibration
+
+STAGE E:
+    multi-window
+
+STAGE F:
+    SSL
+
+STAGE G:
+    heterogeneous ensemble
+
+STAGE H:
+    external zero-shot
+
+STAGE I:
+    external UDA
+
+STAGE J:
+    supervised cross-domain adaptation
+
+Only carry strong candidates forward.
+
+============================================================
+MOST IMPORTANT CANDIDATE ARCHITECTURE
+============================================================
+
+Implement and test:
+
+DUAL-VIEW ATTENTION ECG NETWORK
+
+Input:
+
+    12-lead ECG
+
+Branch 1:
+
+    rhythm view
+    0.5–40 Hz
+    z-normalized
+    MultiScale CNN
+
+Branch 2:
+
+    morphology/ST view
+    0.05–40/45 Hz
+    amplitude-preserving
+    MultiScale CNN
+
+Each branch:
+
+    lead attention
+    residual trunk
+
+Fusion:
+
+    gated feature fusion
+
+Temporal head:
+
+    gated temporal attention pooling
+    +
+    global average pooling
+
+Optional:
+
+    time-frequency branch
+
+Classifier:
+
+    9 logits
+
+Calibration:
+
+    classwise temperature/logit scaling
+    per-class thresholds
+
+============================================================
+KNOWLEDGE DISTILLATION
+============================================================
+
+When training adapted or expanded models:
+
+teacher:
+
+    immutable golden CPSC system
+
+student:
+
+    new candidate
+
+Use:
+
+    supervised task loss
+    +
+    small distillation loss
+
+This is intended to preserve source-domain behavior.
+
+Never modify teacher weights.
+
+============================================================
+FINAL TEST RULE
+============================================================
+
+After all model, preprocessing, loss, calibration, ensemble and adaptation decisions
+are frozen:
+
+RUN THE FINAL CPSC TEST.
+
+Do not make another development decision based on the test result.
+
+Then run the frozen external evaluations.
+
+============================================================
+EXTERNAL PRIMARY
+============================================================
+
+Run:
+
+    all 45,152 audited
+    full evaluable 15,614 target-class cohort
+    no cherry-picking
+
+Primary zero-shot result must be the combined cohort.
+
+Chapman and Ningbo are secondary diagnostics.
+
+============================================================
+FULL DATASET REQUIREMENT
+============================================================
+
+The final run MUST use:
+
+CPSC:
+
+    all 6,877 records
+
+External:
+
+    all 45,152 archive records audited
+
+Primary external evaluation:
+
+    all 15,614 evaluable target-class records
+
+Never report the small robustness subset as the primary classification result.
+
+============================================================
+PAPER-READY OUTPUTS
+============================================================
+
+Generate:
+
+TABLE 1:
+    dataset statistics
+
+TABLE 2:
+    main CPSC clean results
+
+TABLE 3:
+    CPSC per-class results
+
+TABLE 4:
+    external zero-shot results
+
+TABLE 5:
+    external adaptation results
+
+TABLE 6:
+    robustness
+
+TABLE 7:
+    AWARD ablation
+
+TABLE 8:
+    morphology
+
+TABLE 9:
+    seed statistics
+
+TABLE 10:
+    bootstrap confidence intervals
+
+TABLE 11:
+    computational complexity
+
+Also produce:
+
+    model_search.csv
+    preprocessing_search.csv
+    loss_search.csv
+    threshold_search.csv
+    ensemble_search.csv
+    external_adaptation_search.csv
+    domain_shift_report.csv
+    final_numbers.json
+    final_config.json
+    reproducibility_checks.csv
+
+============================================================
+FINAL FIGURES
+============================================================
+
+Generate publication-quality:
+
+    pipeline
+    training curves
+    per-class CPSC F1
+    CPSC ROC/PR
+    external per-class AUC
+    external per-class F1
+    robustness curve
+    AWARD Pareto
+    morphology examples
+    calibration
+    domain-shift analysis
+    CPSC vs external comparison
+
+No decorative figures.
+
+============================================================
+FINAL ARTIFACT DIRECTORY
+============================================================
+
+Create:
+
+FINAL_ECG_RESULTS/
+
+with:
+
+    ECG_CPSC2018_FINAL.ipynb
+
+    results/
+        dataset_manifest.json
+        split_summary.csv
+        class_distribution.csv
+        preprocessing_results.csv
+        model_search.csv
+        loss_search.csv
+        threshold_search.csv
+        ensemble_search.csv
+        external_adaptation_search.csv
+        domain_shift_report.csv
+        classifier_selection.csv
+        test_results.csv
+        per_class_results.csv
+        external_metrics.csv
+        external_per_class.csv
+        robustness_results.csv
+        morphology_results.csv
+        bootstrap_cis.csv
+        final_numbers.json
+        final_config.json
+        reproducibility_checks.csv
+
+    checkpoints/
+        GOLDEN_CPSC/
+        BEST_CPSC/
+        BEST_ZERO_SHOT/
+        BEST_UDA/
+        BEST_SUPERVISED_ADAPTATION/
+
+    predictions/
+
+    figures/
+
+    paper_tables/
+
+    configs/
+
+    manifests/
+
+    logs/
+
+    README_FINAL.md
+
+============================================================
+GOLDEN BASELINE
+============================================================
+
+Never overwrite:
+
+    GOLDEN_CPSC
+
+It must preserve:
+
+    canonical model
+    canonical thresholds
+    canonical configuration
+    canonical test result
+
+Golden:
+
+    AUC 0.9714
+    F1  0.8330
+
+============================================================
+FINAL VALIDATION GATES
+============================================================
+
+At minimum verify:
+
+GATE 01:
+    correct CPSC dataset
+
+GATE 02:
+    correct labels
+
+GATE 03:
+    no split overlap
+
+GATE 04:
+    no val_select leakage
+
+GATE 05:
+    no test leakage
+
+GATE 06:
+    independent seeds
+
+GATE 07:
+    exact canonical checkpoint recovered OR discrepancy documented
+
+GATE 08:
+    all selected checkpoints exist
+
+GATE 09:
+    all final metrics regenerated
+
+GATE 10:
+    figures exist
+
+GATE 11:
+    tables exist
+
+GATE 12:
+    no NaN
+
+GATE 13:
+    golden baseline immutable
+
+GATE 14:
+    notebook fully executed
+
+GATE 15:
+    final manifest matches notebook outputs
+
+GATE 16:
+    external archive verified
+
+GATE 17:
+    external 45,152 census complete
+
+GATE 18:
+    external label mapping frozen
+
+GATE 19:
+    strict zero-shot branch confirmed
+
+GATE 20:
+    external adaptation branch separately identified
+
+GATE 21:
+    robustness complete
+
+GATE 22:
+    morphology complete
+
+GATE 23:
+    final ZIP complete
+
+============================================================
+ERROR POLICY
+============================================================
+
+If any error occurs:
+
+    stop
+    inspect
+    diagnose
+    fix
+    rerun
+    verify
+
+Do not hide errors with broad try/except.
+
+Do not fake successful outputs.
+
+Do not create placeholder values.
+
+Do not fabricate missing metrics.
+
+============================================================
+FINAL EXECUTION REQUIREMENT
+============================================================
+
+AFTER ALL MODIFICATIONS:
+
+1. Execute the complete notebook from a clean kernel.
+2. Use the FULL CPSC dataset.
+3. Use the FULL Zheng archive.
+4. Complete all selected training runs.
+5. Complete all final evaluations.
+6. Inspect every major output.
+7. Fix all errors.
+8. Rerun until clean.
+9. Freeze results.
+10. Save checkpoints.
+11. Save predictions.
+12. Save all CSV/JSON/figures/tables.
+13. Generate README.
+14. Generate reproducibility manifest.
+15. Create final ZIP.
+
+The final notebook must be FULLY EXECUTED.
+
+The final ZIP must contain the fully executed notebook.
+
+============================================================
+FINAL REQUIRED RESPONSE
+============================================================
+
+After completion report:
+
+1. FINAL ZIP
+2. FINAL EXECUTED NOTEBOOK
+3. GOLDEN CPSC RESULT
+4. BEST NEW CPSC RESULT
+5. CPSC AUC delta
+6. CPSC F1 delta
+7. CPSC per-class results
+8. STRICT ZERO-SHOT EXTERNAL RESULT
+9. UNSUPERVISED ADAPTATION RESULT
+10. SUPERVISED CROSS-DOMAIN ADAPTATION RESULT
+11. BEST EXTERNAL RESULT
+12. External cohort results
+13. Robustness results
+14. Morphology results
+15. Bootstrap CIs
+16. Exact final configuration
+17. Training compute/runtime
+18. Important limitations
+
+Explicitly print:
+
+    Golden CPSC baseline preserved: YES/NO
+    Canonical checkpoint recovered: YES/NO
+    Final notebook fully executed: YES/NO
+    Full CPSC dataset used: YES/NO
+    Full Zheng archive audited: YES/NO
+    Full evaluable external cohort scored: YES/NO
+    Test leakage check: PASS/FAIL
+    Reproducibility check: PASS/FAIL
+    Final ZIP created: YES/NO
+
+============================================================
+MOST IMPORTANT RESEARCH PRINCIPLE
+============================================================
+
+The goal is NOT:
+
+    "make the number look bigger"
+
+The goal is:
+
+    find the strongest genuinely better model
+
+using:
+
+    better representation
+    better preprocessing
+    better temporal attention
+    better morphology preservation
+    better optimization
+    better calibration
+    better ensemble diversity
+    self-supervised learning
+    domain adaptation
+
+while preserving:
+
+    scientific validity
+    reproducibility
+    leakage-free evaluation
+    the immutable golden baseline.
+
+============================================================
+FINAL IMPLEMENTATION PRIORITY
+============================================================
+
+Priority 1:
+    Recover exact 0.9714 / 0.8330 canonical system.
+
+Priority 2:
+    Re-run canonical external zero-shot.
+
+Priority 3:
+    Dual-view rhythm + ST morphology representation.
+
+Priority 4:
+    Temporal attention pooling for PAC/PVC.
+
+Priority 5:
+    Higher-resolution 200 Hz candidate.
+
+Priority 6:
+    Better calibration / classwise thresholds.
+
+Priority 7:
+    Loss optimization with ASL / BCE+ranking.
+
+Priority 8:
+    Proper long-budget GPU training.
+
+Priority 9:
+    Heterogeneous ensemble.
+
+Priority 10:
+    SSL pretraining on all unlabeled ECG.
+
+Priority 11:
+    Unsupervised domain adaptation.
+
+Priority 12:
+    Supervised Chapman/Ningbo cross-domain adaptation.
+
+Priority 13:
+    Final full-budget 3–5 seed execution.
+
+Priority 14:
+    Full robustness/morphology/statistics.
+
+Priority 15:
+    Fully executed notebook + final ZIP.
+============================================================
+10 PARALLEL SUB-AGENT EXECUTION REQUIREMENT
+============================================================
+
+You MUST use 10 parallel sub-agents during the implementation, experiment
+search, execution, debugging, and final verification process.
+
+The purpose is to maximize research quality, reduce blind spots, and
+accelerate the full experiment.
+
+DO NOT create 10 competing final notebooks.
+
+There must be:
+
+    ONE CANONICAL NOTEBOOK
+    ONE CANONICAL FINAL WORKFLOW
+
+All sub-agents must work as supporting research/engineering agents and must
+report their findings, recommendations, experiment results, and detected
+issues back into the canonical workflow.
+
+============================================================
+SUB-AGENT RESPONSIBILITIES
+============================================================
+
+SUB-AGENT 1 — NOTEBOOK / CODE ARCHITECTURE AUDIT
+
+Responsibilities:
+
+    inspect the entire current notebook
+    inspect execution order
+    inspect model construction
+    inspect training pipeline
+    inspect inference pipeline
+    inspect checkpoint logic
+    inspect caching/resume logic
+    identify implementation bugs
+    identify dead or contradictory code
+
+Special focus:
+
+    canonical 0.9714 / 0.8330 recovery
+    current replica mismatch
+    hidden implementation issues
+
+Return:
+
+    code findings
+    concrete fixes
+    risk level
+    recommended modifications
+
+
+SUB-AGENT 2 — DATASET / SIGNAL AUDIT
+
+Responsibilities:
+
+    verify CPSC2018
+    verify Zheng archive
+    verify .mat/.hea integrity
+    verify sampling rate
+    verify lead order
+    verify physical units
+    verify record counts
+    verify class distributions
+    inspect signal quality
+
+Special focus:
+
+    domain differences between CPSC and Zheng
+    amplitude distribution
+    frequency characteristics
+    noise
+    morphology
+    ST-segment characteristics
+
+Return:
+
+    dataset diagnostics
+    domain-shift findings
+    preprocessing recommendations
+
+
+SUB-AGENT 3 — LABEL / CLINICAL HARMONIZATION AUDIT
+
+Responsibilities:
+
+    inspect CPSC label definitions
+    inspect all external SNOMED codes
+    verify current 13-code mapping
+    inspect possible exact/clinically-equivalent mappings
+    identify ambiguous mappings
+    investigate STD/STE/PAC/PVC/LBBB differences
+
+CRITICAL:
+
+    do not expand labels simply to improve metrics
+
+Return:
+
+    strict mapping
+    optional adaptation mapping
+    mapping risks
+    recommendations
+
+
+SUB-AGENT 4 — ML ARCHITECTURE OPTIMIZATION
+
+Responsibilities:
+
+    investigate higher-performing ECG architectures
+    compare current MultiScaleECGNet
+    temporal attention
+    gated attention pooling
+    dual-view architecture
+    lead attention
+    residual improvements
+    200 Hz candidate
+    time-frequency branch
+    heterogeneous ensemble
+
+Special focus:
+
+    PAC
+    PVC
+    STD
+    STE
+    SR
+
+Return:
+
+    highest-ROI architecture candidates
+    expected benefits
+    computational cost
+    validation strategy
+
+
+SUB-AGENT 5 — LOSS / SAMPLING / AUGMENTATION OPTIMIZATION
+
+Responsibilities:
+
+    evaluate WBCE variants
+    ASL
+    focal loss
+    BCE + ranking
+    soft-F1 components
+    class-aware sampling
+    rare-class sampling
+    ECG-safe augmentation
+    dual-view augmentation
+
+Special focus:
+
+    class imbalance
+    rare arrhythmia detection
+    preserving ST morphology
+
+Return:
+
+    best loss candidates
+    best sampling candidates
+    augmentation recommendations
+    validation results
+
+
+SUB-AGENT 6 — PREPROCESSING / CALIBRATION / INFERENCE
+
+Responsibilities:
+
+    test preprocessing variants
+    100 Hz vs 200 Hz
+    filter cutoff
+    normalization
+    amplitude-preserving morphology branch
+    random windows
+    K=1/3/5/7
+    aggregation strategies
+    classwise thresholds
+    temperature scaling
+    calibration
+    probability fusion
+
+Special focus:
+
+    improve F1 without reducing AUC
+    improve PAC/PVC/STD/STE
+    identify threshold-vs-representation failures
+
+Return:
+
+    preprocessing comparison
+    calibration comparison
+    inference comparison
+
+
+SUB-AGENT 7 — SSL / DOMAIN ADAPTATION
+
+Responsibilities:
+
+    investigate self-supervised ECG representation learning
+    contrastive learning
+    masked temporal modeling
+    masked-lead prediction
+    target-domain representation learning
+    domain-specific BatchNorm
+    CORAL
+    feature alignment
+    entropy minimization
+    EMA teacher
+    supervised adaptation
+
+Design separate tracks:
+
+    STRICT ZERO-SHOT
+    UNSUPERVISED DOMAIN ADAPTATION
+    SUPERVISED DOMAIN ADAPTATION
+
+Return:
+
+    implementation plan
+    validation protocol
+    leakage risks
+    expected domain-transfer benefits
+
+
+SUB-AGENT 8 — ROBUSTNESS / AWARD
+
+Responsibilities:
+
+    audit AWARD
+    audit FixedDWT
+    verify differentiability
+    verify adaptive PGD
+    verify EOT
+    inspect gradient paths
+    test robustness
+    inspect morphology preservation
+
+DO NOT optimize robustness at the expense of clean performance.
+
+Return:
+
+    robustness findings
+    AWARD findings
+    defense recommendations
+    morphology recommendations
+
+
+SUB-AGENT 9 — STATISTICS / VALIDATION / LEAKAGE
+
+Responsibilities:
+
+    audit train/val/test protocol
+    validate split integrity
+    inspect val_tune usage
+    inspect val_select usage
+    inspect test access
+    inspect external leakage
+    audit threshold selection
+    audit ensemble selection
+    audit bootstrap
+    audit seed independence
+    verify statistical comparisons
+
+CRITICAL:
+
+    test data must never be used for optimization.
+
+Return:
+
+    leakage report
+    statistical recommendations
+    validation-gate status
+
+
+SUB-AGENT 10 — FINAL EXECUTION / REPRODUCIBILITY / PACKAGING
+
+Responsibilities:
+
+    monitor full execution
+    inspect runtime failures
+    verify checkpoints
+    verify outputs
+    verify figures
+    verify CSV/JSON files
+    verify notebook execution counts
+    verify final metrics
+    verify ZIP contents
+    verify hashes
+    verify reproducibility
+    perform final scientific audit
+
+Before final delivery verify:
+
+    notebook fully executed
+    no unresolved errors
+    all selected checkpoints exist
+    all final metrics regenerated
+    all required artifacts exist
+    all gates pass
+    ZIP contains the fully executed notebook
+
+Return:
+
+    final readiness report
+    missing-artifact report
+    reproducibility report
+    packaging report
+
+
+============================================================
+PARALLEL EXECUTION POLICY
+============================================================
+
+Run these 10 sub-agents in parallel whenever their tasks are independent.
+
+Do NOT unnecessarily serialize independent investigations.
+
+However:
+
+    all final model-selection decisions
+    all final experiment decisions
+    all final test evaluation
+    all final external evaluation
+    all final packaging
+
+must converge into the ONE canonical workflow.
+
+Sub-agents must NOT independently redefine the evaluation protocol.
+
+They must follow the master protocol.
+
+============================================================
+SUB-AGENT RESULT INTEGRATION
+============================================================
+
+After the parallel investigations:
+
+1. Collect all findings.
+2. Remove duplicate recommendations.
+3. Identify conflicting recommendations.
+4. Resolve conflicts using validation evidence.
+5. Build one canonical experiment plan.
+6. Implement only validated/high-ROI candidates.
+7. Preserve the golden baseline.
+8. Run the selected experiments.
+9. Inspect actual results.
+10. Freeze the final configuration.
+
+Do NOT choose an approach merely because a sub-agent predicts it will
+perform better.
+
+Actual validation evidence must determine promotion.
+
+============================================================
+EXECUTION DISCIPLINE
+============================================================
+
+For every major candidate:
+
+    IMPLEMENT
+       ↓
+    RUN
+       ↓
+    INSPECT
+       ↓
+    CHECK VALIDATION
+       ↓
+    COMPARE AGAINST GOLDEN
+       ↓
+    PROMOTE OR REJECT
+       ↓
+    DOCUMENT DECISION
+
+Never allow:
+
+    silent failures
+    fake outputs
+    placeholder metrics
+    test-driven optimization
+    unexplained cherry-picking
+
+============================================================
+FINAL SUB-AGENT SYNTHESIS
+============================================================
+
+Before the final full run, require all 10 sub-agents' findings to be
+summarized into one table:
+
+    Agent
+    Finding
+    Recommended fix
+    Validation evidence
+    Risk
+    Adopted? YES/NO
+    Reason
+
+The canonical implementation must record this synthesis in:
+
+    results/subagent_synthesis.csv
+    results/subagent_synthesis.json
+
+============================================================
+IMPORTANT
+============================================================
+
+The 10 sub-agents are SUPPORTING ENGINEERING/RESEARCH AGENTS.
+
+They must NOT create competing final notebooks.
+
+There must remain exactly:
+
+    ONE CANONICAL FINAL NOTEBOOK
+    ONE FINAL CONFIGURATION
+    ONE FINAL EXECUTED WORKFLOW
+    ONE FINAL PACKAGE
+
+============================================================
+END OF 10 PARALLEL SUB-AGENT REQUIREMENT
+============================================================
+
+============================================================
+END OF MASTER PROMPT
+============================================================

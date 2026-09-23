@@ -1,0 +1,5 @@
+system,prd_mean,prd_std,prd_n,snr_mean,snr_std,snr_n,corr_mean,corr_std,corr_n,det_rate_mean,det_rate_std,det_rate_n,displace_ms_mean,displace_ms_std,displace_ms_n,rri_err_ms_mean,rri_err_ms_std,rri_err_ms_n,hr_err_bpm_mean,hr_err_bpm_std,hr_err_bpm_n,amp_err_mean,amp_err_std,amp_err_n,width_err_ms_mean,width_err_ms_std,width_err_ms_n
+clean->none (purification damage),0.0,0.0,24,150.0,0.0,24,1.0,0.0,24,1.0,0.0,24,0.0,0.0,24,0.0,0.0,24,0.0,0.0,24,0.0,0.0,24,0.0,0.0,24
+clean->adversarial (attack damage),2.5518,0.1082,24,31.8706,0.3729,24,0.9997,0.0,24,0.9954,0.0227,24,1.2857,5.0481,24,9.3574,28.1798,24,0.0065,0.0198,24,0.1374,0.4468,24,0.9354,2.3721,24
+clean->adversarial->none (mitigated),2.5518,0.1082,24,31.8706,0.3729,24,0.9997,0.0,24,0.9954,0.0227,24,1.2857,5.0481,24,9.3574,28.1798,24,0.0065,0.0198,24,0.1374,0.4468,24,0.9354,2.3721,24
+adversarial->none (purification of adv),0.0,0.0,24,150.0142,0.0342,24,1.0,0.0,24,1.0,0.0,24,0.0,0.0,24,0.0,0.0,24,0.0,0.0,24,0.0,0.0,24,0.0,0.0,24
