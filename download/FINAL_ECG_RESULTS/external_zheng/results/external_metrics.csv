@@ -1,0 +1,15 @@
+metric,value
+macro_auc,0.8622
+macro_ap,0.523
+macro_f1,0.4787
+macro_f2,0.5166
+macro_precision,0.4833
+macro_recall,0.5837
+macro_specificity,0.9343
+micro_f1,0.5562
+hamming_loss,0.1139
+exact_match,0.377
+n_evaluable_classes,9.0
+n_records,15614.0
+ece,0.1333
+brier,0.0987

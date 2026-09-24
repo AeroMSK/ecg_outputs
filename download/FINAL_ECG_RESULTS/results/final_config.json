@@ -1,0 +1,178 @@
+{
+  "dataset": "CPSC 2018 training set (China Physiological Signal Challenge 2018)",
+  "n_records": 6877,
+  "split": {
+    "method": "iterative_stratification",
+    "fracs": [
+      0.8,
+      0.1,
+      0.05,
+      0.05
+    ],
+    "grouping_unit": "record (one record per patient in CPSC2018)",
+    "reproduces_v1_exactly": true,
+    "counts": {
+      "train": 5405,
+      "val_tune": 735,
+      "val_select": 369,
+      "test": 368
+    }
+  },
+  "preprocessing": {
+    "resample": "poly",
+    "pad_mode": "wrap",
+    "band_low": 0.5,
+    "band_high": 40.0,
+    "fs_in": 500,
+    "fs_out": 100
+  },
+  "model": {
+    "arch": "control",
+    "params_per_member": 2956835,
+    "lead_mode": "global",
+    "se_gate": false
+  },
+  "training": {
+    "loss": "wbce",
+    "pos_key": "sqrt",
+    "optimizer": "AdamW",
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "batch": 32,
+    "max_epochs": 3,
+    "patience": 2,
+    "early_stop_on": "val_tune macro_auc",
+    "sampling": "class-aware alpha=0.5",
+    "augmentation": "RhythmSafeAugment p=0.5",
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "random_window": false
+  },
+  "system": {
+    "use_ensemble": true,
+    "K": 1,
+    "agg": "mean",
+    "mw_adopted": false
+  },
+  "calibration": {
+    "policy": "perclass_recall>=0.50",
+    "thresholds": {
+      "SR": 0.4700000000000001,
+      "AF": 0.8900000000000002,
+      "IAVB": 0.37000000000000005,
+      "LBBB": 0.5700000000000002,
+      "RBBB": 0.31000000000000005,
+      "PAC": 0.4800000000000001,
+      "PVC": 0.7000000000000002,
+      "STD": 0.6100000000000001,
+      "STE": 0.6900000000000002
+    },
+    "test_ece": 0.07496379495762594,
+    "test_brier": 0.047844674438238144
+  },
+  "defense": {
+    "name": "none",
+    "config": null,
+    "thresholds_fixed_policy": {
+      "SR": 0.5000000000000001,
+      "AF": 0.9000000000000002,
+      "IAVB": 0.6600000000000001,
+      "LBBB": 0.27,
+      "RBBB": 0.16000000000000003,
+      "PAC": 0.6900000000000002,
+      "PVC": 0.7400000000000002,
+      "STD": 0.7500000000000002,
+      "STE": 0.8600000000000002
+    },
+    "thresholds_best_policy": {
+      "SR": 0.5000000000000001,
+      "AF": 0.9000000000000002,
+      "IAVB": 0.6600000000000001,
+      "LBBB": 0.27,
+      "RBBB": 0.16000000000000003,
+      "PAC": 0.6900000000000002,
+      "PVC": 0.7400000000000002,
+      "STD": 0.7500000000000002,
+      "STE": 0.8600000000000002
+    },
+    "margin_rule": "adaptive AUC >= none + 0.010 on val_select"
+  },
+  "pgd_at": {
+    "eps": 0.03,
+    "steps": 2,
+    "epochs": 3
+  },
+  "cv": {
+    "folds": 3,
+    "epochs": 3,
+    "oof_auc": 0.9173,
+    "oof_f1": 0.6742
+  },
+  "attacks": {
+    "steps": 8,
+    "strong_steps": 15,
+    "restarts": 3,
+    "eot": "per-step uniformly sampled member; selection loss over all members",
+    "alpha_rule": "max(eps/4, 2.5*eps/steps)",
+    "seeds": "per-batch derived"
+  },
+  "golden_reference": {
+    "macro_auc": 0.9648,
+    "macro_f1": 0.8106,
+    "macro_precision": 0.7717,
+    "macro_recall": 0.8634,
+    "f1_PAC": 0.6838,
+    "f1_STE": 0.6129,
+    "f1_STD": 0.7797,
+    "f1_PVC": 0.7874
+  },
+  "v1_reference": {
+    "control_s42_val_select": {
+      "auc": 0.9576,
+      "f1": 0.7314
+    },
+    "seed43_val_select": {
+      "auc": 0.9642,
+      "f1": 0.7232
+    },
+    "seed44_val_select": {
+      "auc": 0.9522,
+      "f1": 0.7057
+    },
+    "ensemble_val_select": {
+      "auc": 0.9662,
+      "f1": 0.7381
+    },
+    "test_clean_ensemble": {
+      "auc": 0.9678,
+      "f1": 0.7769
+    },
+    "test_control_single": {
+      "auc": 0.964,
+      "f1": 0.7835
+    },
+    "epochs_trained_v1": 12
+  },
+  "budget": "fast_cpu",
+  "run_mode": "final",
+  "device": "cpu",
+  "environment": {
+    "platform": "Linux-5.10.134-013.15.kangaroo.al8.x86_64-x86_64-with-glibc2.41",
+    "python": "3.12.14",
+    "cpu_count": 2,
+    "device": "cpu",
+    "gpu": null,
+    "torch": "2.14.0+cpu",
+    "numpy": "2.1.3",
+    "pandas": "2.2.3",
+    "scipy": "1.14.1",
+    "sklearn": "1.5.2",
+    "pywt": "1.8.0",
+    "budget": "fast_cpu",
+    "run_mode": "final"
+  },
+  "execution_note": "chunked top-to-bottom execution on a CPU-only 2-core machine; every training stage is epoch-resumable with full RNG-state persistence; all evaluations (robustness/ablation/statistics/morphology/CV/attacks) freshly computed in this final pass per R10"
+}

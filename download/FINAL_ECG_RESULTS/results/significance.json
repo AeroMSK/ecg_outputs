@@ -1,0 +1,22 @@
+{
+  "primary_final_vs_control": {
+    "mean_delta": 0.021808334104316287,
+    "ci": [
+      -0.010708774451860411,
+      0.05841677012455653
+    ],
+    "p_two_sided": 0.21333333333333335
+  },
+  "ensemble_vs_single_same_recipe": {
+    "mean_delta": 0.025038689810933278,
+    "ci": [
+      0.004707427636135609,
+      0.05045741950145319
+    ],
+    "p_two_sided": 0.006666666666666667
+  },
+  "test": "paired bootstrap, record-level, macro-F1, 95% percentile CI",
+  "n_boot": 300,
+  "labeling": "primary: deployed final system (3-seed ensemble + K=1) vs reconstructed V4 control (single seed-42, own thresholds); secondary: ensembling effect alone",
+  "multiple_comparison_policy": "one pre-declared primary paired test (final vs control, macro-F1); all other comparisons are descriptive with CIs only; no post-hoc significance claims"
+}

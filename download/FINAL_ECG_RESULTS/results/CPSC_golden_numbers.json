@@ -1,0 +1,10 @@
+{
+  "macro_auc": 0.9714,
+  "macro_f1": 0.833,
+  "macro_precision": 0.8398,
+  "macro_recall": 0.8336,
+  "macro_ap": 0.8883,
+  "ece": 0.0316,
+  "brier": 0.0291,
+  "provenance": "protected cpu_final_v2 execution of ECG_CPSC2018_FINAL (uploaded canonical notebook, stored outputs); preserved as the immutable CPSC reference -- never overwritten by later re-executions"
+}

@@ -1,0 +1,17 @@
+defense,attack,eps,steps,restarts,macro_auc,macro_f1,secs
+none,PGD_oblivious,0.01,8,1,0.9448,0.6894,2.5
+FixedDWT,PGD_oblivious,0.01,8,1,0.9462,0.6996,2.5
+AWARD,PGD_oblivious,0.01,8,1,0.9453,0.685,2.5
+PGD-AT,PGD_oblivious,0.01,8,1,0.9487,0.6839,2.5
+none,PGD_oblivious,0.03,8,1,0.9159,0.6466,2.4
+FixedDWT,PGD_oblivious,0.03,8,1,0.9216,0.6485,2.4
+AWARD,PGD_oblivious,0.03,8,1,0.9219,0.6501,2.4
+PGD-AT,PGD_oblivious,0.03,8,1,0.9347,0.6626,2.4
+none,PGD_oblivious,0.05,8,1,0.8786,0.5588,2.4
+FixedDWT,PGD_oblivious,0.05,8,1,0.8873,0.5989,2.4
+AWARD,PGD_oblivious,0.05,8,1,0.889,0.6038,2.4
+PGD-AT,PGD_oblivious,0.05,8,1,0.9251,0.6321,2.4
+none,adaptive-PGD,0.03,8,1,0.9156,0.6466,10.5
+FixedDWT,adaptive-PGD,0.03,8,1,0.9186,0.6466,11.0
+AWARD,adaptive-PGD,0.03,8,1,0.919,0.6501,11.4
+PGD-AT,adaptive-PGD,0.03,8,1,0.9206,0.6261,9.4

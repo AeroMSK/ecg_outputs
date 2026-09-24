@@ -1,0 +1,14 @@
+\begin{table}[htbp]\centering\caption{AWARD component ablation (full test, per-rung refit thresholds).}\label{tab:ablation}
+\begin{tabular}{llrrrrrl}
+\toprule
+system & description & clean_f1 & clean_auc & adaptive_auc & adaptive_f1 & prd & threshold_policy \\
+\midrule
+none & no defense & 0.740700 & 1.000000 & 0.959600 & 0.558200 & 0.000000 & perclass_f1_refit \\
+FixedDWT & V1: 1-level Haar, global thr 0.12 & 0.740700 & 1.000000 & 0.969700 & 0.558200 & 5.100000 & perclass_f1_refit \\
+DWT_L3_fixed & 3-level db4, fixed thr & 0.740700 & 1.000000 & 0.949500 & 0.558200 & 6.910000 & perclass_f1_refit \\
+adaptive_only & + MAD adaptive sigma & 0.740700 & 1.000000 & 0.949500 & 0.563000 & 10.120000 & perclass_f1_refit \\
+full_no_guard & + scale-aware alpha, lead-aware beta & 0.740700 & 1.000000 & 0.949500 & 0.563000 & 8.100000 & perclass_f1_refit \\
+AWARD_full & + tuned config (kappa/alpha/rho from 9b) & 0.740700 & 1.000000 & 0.949500 & 0.563000 & 8.100000 & perclass_f1_refit \\
+\bottomrule
+\end{tabular}
+\end{table}

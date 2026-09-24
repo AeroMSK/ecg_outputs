@@ -1,0 +1,10 @@
+{
+  "resample": "poly",
+  "pad_mode": "wrap",
+  "band_low": 0.5,
+  "band_high": 40.0,
+  "fs_in": 500,
+  "fs_out": 100,
+  "rpeak_backend": "neurokit2",
+  "hr_mean_delta_bpm": 0.5891875490403861
+}

@@ -1,0 +1,13 @@
+\begin{table}[htbp]\centering\caption{Clean-test classification performance (frozen systems).}\label{tab:clean}
+\begin{tabular}{lrrrrrrrrr}
+\toprule
+system & macro_auc & macro_f1 & macro_precision & macro_recall & macro_ap & f1_PAC & f1_STE & f1_STD & f1_PVC \\
+\midrule
+control (V4 recipe, single s42) & 0.945700 & 0.719700 & 0.717700 & 0.730300 & 0.768900 & 0.491200 & 0.461500 & 0.739100 & 0.687500 \\
+final (single, clean) & 0.945700 & 0.719700 & 0.717700 & 0.730300 & 0.768900 & 0.491200 & 0.461500 & 0.739100 & 0.687500 \\
+final + FixedDWT (fixed-pol thr) & 0.945700 & 0.725000 & 0.722700 & 0.735200 & 0.767500 & 0.474600 & 0.444400 & 0.764000 & 0.698400 \\
+final + FixedDWT (best-pol thr) & 0.945700 & 0.725000 & 0.722700 & 0.735200 & 0.767500 & 0.474600 & 0.444400 & 0.764000 & 0.698400 \\
+PGD-AT baseline (single s42) & 0.939400 & 0.621900 & 0.708900 & 0.634800 & 0.750900 & 0.060600 & 0.500000 & 0.617900 & 0.596500 \\
+\bottomrule
+\end{tabular}
+\end{table}
