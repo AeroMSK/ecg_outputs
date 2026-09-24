@@ -5172,7 +5172,7 @@ PALETTE = {"none": "#c44e52", "FixedDWT": "#dd8452", "AWARD": "#4c72b0", "PGD-AT
 def save_fig(fig, name):
     fig.savefig(os.path.join(FIGURES_DIR, name + ".png"), dpi=200, bbox_inches="tight")
     fig.savefig(os.path.join(FIGURES_DIR, name + ".pdf"), bbox_inches="tight")
-    plt.show(fig)
+    plt.show()
     plt.close(fig)
 
 # ---- FIGURE 1: method pipeline (schematic) ----

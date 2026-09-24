@@ -1,0 +1,6 @@
+system,macro_auc,macro_f1,macro_precision,macro_recall,macro_ap,f1_PAC,f1_STE,f1_STD,f1_PVC
+"control (V4 recipe, single s42)",0.9556,0.7431,0.7539,0.755,0.8125,0.449,0.5161,0.7865,0.7761
+"final (3-seed ensemble, clean)",0.9605,0.7633,0.7265,0.8353,0.8398,0.506,0.5263,0.7527,0.7887
+final + none (fixed-pol thr),0.9605,0.7291,0.7453,0.7507,0.8398,0.4444,0.5833,0.75,0.7887
+final + none (best-pol thr),0.9605,0.7291,0.7453,0.7507,0.8398,0.4444,0.5833,0.75,0.7887
+PGD-AT baseline (single s42),0.956,0.7125,0.6795,0.8069,0.8114,0.4158,0.3214,0.7816,0.7273

@@ -1,0 +1,4 @@
+defense,macro_auc,macro_f1,macro_f2,macro_precision,macro_recall,ece,brier,prd_percent,n,thresholds
+none,0.8498,0.4363,0.4564,0.5067,0.5095,0.1198,0.1028,0.0,512,FROZEN CPSC (no external refit)
+FixedDWT,0.8508,0.4413,0.4618,0.5115,0.5122,0.1203,0.103,5.55,512,FROZEN CPSC (no external refit)
+AWARD,0.8495,0.4415,0.462,0.5087,0.5131,0.121,0.103,3.48,512,FROZEN CPSC (no external refit)

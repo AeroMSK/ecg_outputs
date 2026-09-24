@@ -427,10 +427,10 @@
     "parameters_per_member": 2956835,
     "n_system_models": 2,
     "multi_window_K": 1,
-    "inference_ms_per_record_clean": 19.802,
+    "inference_ms_per_record_clean": 19.667,
     "inference_ms_per_record_defense": 0.0,
     "device": "cpu",
     "budget": "fast_cpu",
-    "total_notebook_min": 2.4
+    "total_notebook_min": 4.8
   }
 }

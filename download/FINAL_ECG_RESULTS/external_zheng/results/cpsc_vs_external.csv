@@ -1,0 +1,11 @@
+metric,cpsc2018_test,zheng_external,relative_change
+macro_auc,0.9605,0.8622,-10.23
+macro_f1,0.7633,0.4787,-37.29
+macro_f2,,0.5166,
+macro_precision,0.7265,0.4833,-33.48
+macro_recall,0.8353,0.5837,-30.12
+macro_specificity,,0.9343,
+macro_ap,0.8398,0.523,-37.73
+micro_f1,,0.5562,
+ece,,0.1333,
+brier,,0.0987,

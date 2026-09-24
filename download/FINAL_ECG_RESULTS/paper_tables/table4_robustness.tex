@@ -1,12 +1,12 @@
 \begin{table}[htbp]\centering\caption{Robustness: Macro-AUC under attacks (full test set, EOT ensemble attacks).}\label{tab:robust}
-\begin{tabular}{lrr}
+\begin{tabular}{lrrrr}
 \toprule
-defense & PGD_oblivious_0.03 & adaptive-PGD_0.03 \\
+defense & PGD_oblivious_0.01 & PGD_oblivious_0.03 & PGD_oblivious_0.05 & adaptive-PGD_0.03 \\
 \midrule
-AWARD & 0.946000 & 0.935200 \\
-FixedDWT & 0.915300 & 0.900000 \\
-PGD-AT & 0.930700 & 0.916400 \\
-none & 0.871500 & 0.871500 \\
+AWARD & 0.945300 & 0.921900 & 0.889000 & 0.919000 \\
+FixedDWT & 0.946200 & 0.921600 & 0.887300 & 0.918600 \\
+PGD-AT & 0.948700 & 0.934700 & 0.925100 & 0.920600 \\
+none & 0.944800 & 0.915900 & 0.878600 & 0.915600 \\
 \bottomrule
 \end{tabular}
 \end{table}

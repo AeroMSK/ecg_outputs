@@ -1,0 +1,4 @@
+metric,value
+macro_auc,0.9173
+macro_f1 (per-fold thr),0.6742
+macro_f1 (global 0.5),0.6565

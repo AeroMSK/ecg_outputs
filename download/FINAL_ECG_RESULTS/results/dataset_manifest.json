@@ -1,6 +1,6 @@
 {
   "dataset_name": "CPSC 2018 training set (China Physiological Signal Challenge 2018)",
-  "source": "Source: Google Drive folder 1F8ZB1A5umCS0mYWf48T7OyrnYEx1NNs0 (file CPSC.zip -> CPSC.rar -> CPSC/cpsc_2018/{g1..g7}), downloaded and verified 2026-09-23. Structure = PhysioNet/CinC Challenge 2020 repackaging of the official CPSC2018 challenge training set.",
+  "source": "Source: Google Drive folder 1F8ZB1A5umCS0mYWf48T7OyrnYEx1NNs0 (file CPSC.zip -> CPSC.rar -> CPSC/cpsc_2018/{g1..g7}), downloaded and verified 2026-09-24. Structure = PhysioNet/CinC Challenge 2020 repackaging of the official CPSC2018 challenge training set.",
   "local_root": "/home/z/my-project/work/cpsc_extract/CPSC/cpsc_2018",
   "raw_record_count": 6877,
   "labeled_record_count": 6877,

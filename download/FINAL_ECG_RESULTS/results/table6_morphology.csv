@@ -1,0 +1,5 @@
+system,prd_mean,snr_mean,corr_mean,det_rate_mean,displace_ms_mean,rri_err_ms_mean,hr_err_bpm_mean,amp_err_mean,width_err_ms_mean
+clean->none (purification damage),0.0,150.0,1.0,1.0,0.0,0.0,0.0,0.0,0.0
+clean->adversarial (attack damage),2.5518,31.8706,0.9997,0.9954,1.2857,9.3574,0.0065,0.1374,0.9354
+clean->adversarial->none (mitigated),2.5518,31.8706,0.9997,0.9954,1.2857,9.3574,0.0065,0.1374,0.9354
+adversarial->none (purification of adv),0.0,150.0142,1.0,1.0,0.0,0.0,0.0,0.0,0.0

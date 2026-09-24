@@ -1,0 +1,10 @@
+cpsc_class,cpsc_auc,ext_auc,cpsc_f1,ext_f1,ext_support,label_comparability
+SR,0.9552,0.9641,0.6465,0.6807,8125,shared SNOMED concept
+AF,0.9837,0.9437,0.9167,0.6376,1780,shared SNOMED concept
+IAVB,0.9636,0.9461,0.8767,0.7165,1140,shared SNOMED concept
+LBBB,0.9986,0.9344,0.9565,0.3906,240,shared SNOMED concept
+RBBB,0.9833,0.9856,0.8995,0.8323,1745,shared SNOMED concept
+PAC,0.8763,0.7105,0.506,0.2653,1321,shared SNOMED concept
+PVC,0.9506,0.8325,0.7887,0.5857,1385,shared SNOMED concept
+STD,0.9605,0.6391,0.7527,0.0898,1668,shared SNOMED concept
+STE,0.9725,0.8039,0.5263,0.1093,176,shared SNOMED concept

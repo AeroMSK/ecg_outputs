@@ -35,5 +35,5 @@
   "preprocessing": "IDENTICAL to CPSC: physical mV -> resample_poly 500->100 Hz -> 0.5-40 Hz Butterworth-4 SOS zero-phase band-pass (record level) -> 10 s/1000-sample centre window -> per-window per-lead z-norm",
   "duration_policy": "pre-declared: CPSC rules verbatim (pad if short / centre-crop if long); the full cohort is exactly 10 s so the window is the whole record",
   "unit_rule": "physical_mV = raw_int16 / gain, gain=1000/mV uniformly, baseline=0 (WFDB reference parse; token 6 of the signal spec is init_value, not baseline)",
-  "cpsc_guard_files": 31
+  "cpsc_guard_files": 32
 }

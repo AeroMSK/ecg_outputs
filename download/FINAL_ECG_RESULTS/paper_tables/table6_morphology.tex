@@ -3,10 +3,10 @@
 \toprule
 system & prd_mean & snr_mean & corr_mean & det_rate_mean & displace_ms_mean & rri_err_ms_mean & hr_err_bpm_mean & amp_err_mean & width_err_ms_mean \\
 \midrule
-clean->FixedDWT (purification damage) & 5.831600 & 24.810900 & 0.998300 & 1.000000 & 0.166700 & 0.000000 & 0.000000 & 0.082800 & 0.594300 \\
-clean->adversarial (attack damage) & 2.895500 & 30.765700 & 0.999600 & 1.000000 & 0.000000 & 0.000000 & 0.000000 & 0.029200 & 0.000000 \\
-clean->adversarial->FixedDWT (mitigated) & 6.497200 & 23.818400 & 0.997900 & 1.000000 & 0.166700 & 0.000000 & 0.000000 & 0.091700 & 0.414800 \\
-adversarial->FixedDWT (purification of adv) & 5.833300 & 24.804800 & 0.998300 & 1.000000 & 0.166700 & 0.000000 & 0.000000 & 0.082800 & 0.414800 \\
+clean->none (purification damage) & 0.000000 & 150.000000 & 1.000000 & 1.000000 & 0.000000 & 0.000000 & 0.000000 & 0.000000 & 0.000000 \\
+clean->adversarial (attack damage) & 2.551800 & 31.870600 & 0.999700 & 0.995400 & 1.285700 & 9.357400 & 0.006500 & 0.137400 & 0.935400 \\
+clean->adversarial->none (mitigated) & 2.551800 & 31.870600 & 0.999700 & 0.995400 & 1.285700 & 9.357400 & 0.006500 & 0.137400 & 0.935400 \\
+adversarial->none (purification of adv) & 0.000000 & 150.014200 & 1.000000 & 1.000000 & 0.000000 & 0.000000 & 0.000000 & 0.000000 & 0.000000 \\
 \bottomrule
 \end{tabular}
 \end{table}

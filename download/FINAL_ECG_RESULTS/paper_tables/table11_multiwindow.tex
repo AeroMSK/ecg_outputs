@@ -3,8 +3,12 @@
 \toprule
 K & agg & threshold_policy & macro_f1 & macro_auc & macro_precision & macro_recall \\
 \midrule
-1 & mean & perclass_f1 & 0.717600 & 0.941400 & 0.699900 & 0.749600 \\
-3 & mean & perclass_fbeta1.25 & 0.673200 & 0.916800 & 0.631300 & 0.756400 \\
+1 & mean & perclass_recall>=0.50 & 0.740800 & 0.955100 & 0.718200 & 0.822000 \\
+1 & median & perclass_recall>=0.50 & 0.740800 & 0.955100 & 0.718200 & 0.822000 \\
+3 & mean & perclass_recall>=0.50 & 0.696300 & 0.937900 & 0.662400 & 0.771200 \\
+3 & median & perclass_f1 & 0.548300 & 0.817100 & 0.656700 & 0.560600 \\
+5 & mean & perclass_recall>=0.50 & 0.682000 & 0.929200 & 0.678000 & 0.739300 \\
+5 & median & perclass_f1 & 0.544200 & 0.815600 & 0.621000 & 0.557600 \\
 \bottomrule
 \end{tabular}
 \end{table}

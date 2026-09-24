@@ -3,12 +3,12 @@
 \toprule
 system & description & clean_f1 & clean_auc & adaptive_auc & adaptive_f1 & prd & threshold_policy \\
 \midrule
-none & no defense & 0.740700 & 1.000000 & 0.959600 & 0.558200 & 0.000000 & perclass_f1_refit \\
-FixedDWT & V1: 1-level Haar, global thr 0.12 & 0.740700 & 1.000000 & 0.969700 & 0.558200 & 5.100000 & perclass_f1_refit \\
-DWT_L3_fixed & 3-level db4, fixed thr & 0.740700 & 1.000000 & 0.949500 & 0.558200 & 6.910000 & perclass_f1_refit \\
-adaptive_only & + MAD adaptive sigma & 0.740700 & 1.000000 & 0.949500 & 0.563000 & 10.120000 & perclass_f1_refit \\
-full_no_guard & + scale-aware alpha, lead-aware beta & 0.740700 & 1.000000 & 0.949500 & 0.563000 & 8.100000 & perclass_f1_refit \\
-AWARD_full & + tuned config (kappa/alpha/rho from 9b) & 0.740700 & 1.000000 & 0.949500 & 0.563000 & 8.100000 & perclass_f1_refit \\
+none & no defense & 0.639800 & 0.918300 & 0.876600 & 0.553100 & 0.000000 & perclass_f1_refit \\
+FixedDWT & V1: 1-level Haar, global thr 0.12 & 0.645900 & 0.919200 & 0.877900 & 0.553400 & 5.270000 & perclass_f1_refit \\
+DWT_L3_fixed & 3-level db4, fixed thr & 0.642800 & 0.916300 & 0.875800 & 0.537400 & 7.180000 & perclass_f1_refit \\
+adaptive_only & + MAD adaptive sigma & 0.613300 & 0.905900 & 0.864500 & 0.516700 & 11.720000 & perclass_f1_refit \\
+full_no_guard & + scale-aware alpha, lead-aware beta & 0.609100 & 0.912600 & 0.871100 & 0.534900 & 9.480000 & perclass_f1_refit \\
+AWARD_full & + tuned config (kappa/alpha/rho from 9b) & 0.652600 & 0.919900 & 0.877400 & 0.567800 & 3.110000 & perclass_f1_refit \\
 \bottomrule
 \end{tabular}
 \end{table}

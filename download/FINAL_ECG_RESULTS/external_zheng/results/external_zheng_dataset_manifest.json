@@ -124,5 +124,7 @@
     "malformed WFDB header (deterministic technical exclusion)": 2
   },
   "excluded_record_ids_path": "results/excluded_records.csv",
-  "label_mapping_sha256": "c1b73616947bed0fba91a4ec8b1b8c194157d4d509d4b1f2cdfe410bdc703705"
+  "label_mapping_sha256": "c1b73616947bed0fba91a4ec8b1b8c194157d4d509d4b1f2cdfe410bdc703705",
+  "external_final_config": "configs/external_final_config.json",
+  "predictions_sha256": "77dc2a7ac21f638985df53407e4f51c1c254461b587072d475bcedd6f93437fb"
 }
