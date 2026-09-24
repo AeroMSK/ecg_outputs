@@ -1,0 +1,24 @@
+{
+  "N_labelled": 780,
+  "tier": "T2",
+  "macro_auc": 0.8621588700532999,
+  "macro_ap": 0.5223143934714458,
+  "macro_f1": 0.5330839555307979,
+  "macro_f2": 0.5585608430985501,
+  "macro_precision": 0.5246165006415842,
+  "macro_recall": 0.5932916122054623,
+  "micro_f1": 0.6633176347462062,
+  "hamming_loss": 0.09638518119035848,
+  "exact_match": 0.3895105837939868,
+  "ece": 0.47222983837127686,
+  "brier": 0.09873492270708084,
+  "note": "per-class F1-opt thresholds fit on 780 ext_cal records",
+  "description": "Few-label recalibration: per-class F1-opt thresholds fit on ext_cal, scored on ext_test.",
+  "system": [
+    "final_control_s42_fast_cpu.pth",
+    "final_control_s43_fast_cpu.pth"
+  ],
+  "budget": "fast_cpu",
+  "ext_cal_size": 780,
+  "ext_test_size": 14834
+}

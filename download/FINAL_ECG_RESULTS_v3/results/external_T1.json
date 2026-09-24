@@ -1,0 +1,43 @@
+{
+  "macro_auc": 0.8622168840023505,
+  "macro_ap": 0.5229593438154584,
+  "macro_f1": 0.4425660540760006,
+  "macro_f2": 0.500254382064616,
+  "macro_precision": 0.42526042173159595,
+  "macro_recall": 0.6879768522934255,
+  "micro_f1": 0.46733103261080305,
+  "hamming_loss": 0.19550830451304385,
+  "exact_match": 0.12475983092096836,
+  "ece": 0.5474848953337533,
+  "brier": 0.17699430399978497,
+  "tier": "T1",
+  "description": "Zero-shot + EM prior-shift (Saerens 2002). NO external labels used.",
+  "system": [
+    "final_control_s42_fast_cpu.pth",
+    "final_control_s43_fast_cpu.pth"
+  ],
+  "budget": "fast_cpu",
+  "pi_train": {
+    "SR": 0.1335,
+    "AF": 0.1775,
+    "IAVB": 0.105,
+    "LBBB": 0.0343,
+    "RBBB": 0.27,
+    "PAC": 0.0896,
+    "PVC": 0.1018,
+    "STD": 0.1264,
+    "STE": 0.032
+  },
+  "pi_ext_estimated": {
+    "SR": 0.34302670822579684,
+    "AF": 0.35275779131602886,
+    "IAVB": 0.08827274144813906,
+    "LBBB": 0.10834273650226459,
+    "RBBB": 0.05909369670796314,
+    "PAC": 0.5880813389663323,
+    "PVC": 0.45099614901125673,
+    "STD": 0.19004662916983298,
+    "STE": 0.5278268569722294
+  },
+  "n_em_iterations": 19
+}

@@ -1,0 +1,25 @@
+{
+  "source_npz": "/home/z/my-project/download/FINAL_ECG_RESULTS/external_zheng/predictions/external_zheng_predictions.npz",
+  "sha256": "77dc2a7ac21f638985df53407e4f51c1c254461b587072d475bcedd6f93437fb",
+  "n_records": 15614,
+  "n_classes": 9,
+  "system": [
+    "final_control_s42_fast_cpu.pth",
+    "final_control_s43_fast_cpu.pth"
+  ],
+  "budget": "fast_cpu",
+  "run_mode": "final",
+  "class_names": [
+    "SR",
+    "AF",
+    "IAVB",
+    "LBBB",
+    "RBBB",
+    "PAC",
+    "PVC",
+    "STD",
+    "STE"
+  ],
+  "loaded_at": "2026-09-24 17:28:57",
+  "note": "NO external labels used for fitting T1; T2 fit only on ext_cal subset"
+}

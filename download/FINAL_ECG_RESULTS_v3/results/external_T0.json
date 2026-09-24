@@ -1,0 +1,20 @@
+{
+  "macro_auc": 0.8622168840023505,
+  "macro_ap": 0.5229593438154584,
+  "macro_f1": 0.4786621441243043,
+  "macro_f2": 0.516552418892839,
+  "macro_precision": 0.4832796401657893,
+  "macro_recall": 0.5836741666473512,
+  "micro_f1": 0.556162484403161,
+  "hamming_loss": 0.11390774660916841,
+  "exact_match": 0.37696938644805944,
+  "ece": 0.473297119140625,
+  "brier": 0.09871663898229599,
+  "tier": "T0",
+  "description": "Strict zero-shot: frozen CPSC thresholds, no external data used",
+  "system": [
+    "final_control_s42_fast_cpu.pth",
+    "final_control_s43_fast_cpu.pth"
+  ],
+  "budget": "fast_cpu"
+}

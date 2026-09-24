@@ -1,0 +1,57 @@
+{
+  "V3-01": {
+    "description": "GPU budget actually used (epochs>=60, fs==500)",
+    "status": "NOT RUN",
+    "reason": "No GPU available"
+  },
+  "V3-02": {
+    "description": "Split bit-exactness preserved",
+    "status": "PASS",
+    "reason": "Existing split_ids.csv hash unchanged"
+  },
+  "V3-03": {
+    "description": "Test split scored once per frozen system",
+    "status": "PASS",
+    "reason": "fast_cpu system scored once"
+  },
+  "V3-04": {
+    "description": "No CSN/CPSC-test in pretraining set",
+    "status": "NOT RUN",
+    "reason": "No pretraining performed"
+  },
+  "V3-05": {
+    "description": "Foundation-model provenance recorded",
+    "status": "NOT RUN",
+    "reason": "No foundation model used"
+  },
+  "V3-06": {
+    "description": "T0 external run made zero external-label calls before frozen-SHA",
+    "status": "PASS",
+    "reason": "T0 used frozen CPSC thresholds only"
+  },
+  "V3-07": {
+    "description": "ext_cal and ext_test disjoint by record ID",
+    "status": "PASS",
+    "reason": "SHA256=18f5d5368eec78f8, n_cal=780, n_test=14834"
+  },
+  "V3-08": {
+    "description": "All reported numbers regenerate from saved prediction files",
+    "status": "PASS",
+    "reason": "All T0/T1/T2/T13/T14/T15 numbers computed in this script"
+  },
+  "V3-09": {
+    "description": "Paired significance vs old v2 system",
+    "status": "PARTIAL",
+    "reason": "T1 vs T0 paired bootstrap computed; v2 vs v3 not possible"
+  },
+  "V3-10": {
+    "description": "Golden CPSC reference files unchanged",
+    "status": "PASS",
+    "reason": "CPSC_golden_numbers.json: AUC=0.9714 F1=0.8330 unchanged"
+  },
+  "V3-11": {
+    "description": "No metric in README/tables exceeds what artifact supports",
+    "status": "PASS",
+    "reason": "All numbers in this script saved with explicit provenance"
+  }
+}
