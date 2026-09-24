@@ -1,2 +1,0 @@
-parameters_per_member,n_system_models,multi_window_K,inference_ms_per_record_clean,inference_ms_per_record_defense,device,budget,total_notebook_min
-2956835,2,1,19.802,0.0,cpu,fast_cpu,2.4

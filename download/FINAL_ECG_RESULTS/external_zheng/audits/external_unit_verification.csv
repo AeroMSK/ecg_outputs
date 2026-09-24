@@ -1,8 +1,0 @@
-check,value
-wfdb_reference_agreement_max_absdiff_mV,0.0
-sample_raw_int_absmax,14279.0
-sample_physical_absmax_mV,14.279
-flat_lead_records,3.0
-clipping_records,0.0
-median_leadII_R_amp_external_mV,0.716
-median_leadII_R_amp_cpsc_mV,0.604

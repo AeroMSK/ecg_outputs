@@ -1,1 +1,0 @@
-{"folds": {"cv_fold0_fast_cpu.pth": "0348ce98bc644fa8c966335fac993330ed8eb40137135dd99daeee6dc93a24cb", "cv_fold1_fast_cpu.pth": "521b8210cebc0c5e29c5b885e06eae8da07f7fe53b1ad9419478741bde402a99", "cv_fold2_fast_cpu.pth": "3c4c6391c033f011a1fd6f3c5bd105340e35d133fe9b6764473fd92f0af34273"}, "stage": "cv_oof_v2", "epochs": 3}

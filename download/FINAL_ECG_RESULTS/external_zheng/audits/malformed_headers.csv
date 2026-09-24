@@ -1,3 +1,0 @@
-record_id,malformed_reason
-JS01052,malformed WFDB header: invalid literal for int() with base 10: '500000/mV' | first line: JS01052 12 500 500000/mV 16 0 15 31255 0 I
-JS23074,malformed WFDB header: list index out of range | first line: S23074 12 500 5000 JS23074.mat 16+24 1000/mV 16 0 54 12431 0 I

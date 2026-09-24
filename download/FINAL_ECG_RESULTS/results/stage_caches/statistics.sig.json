@@ -1,1 +1,0 @@
-{"system": {"ckpts": {"final_control_s42_fast_cpu.pth": "052465c4eba9d10f37ae1f41f5e68d45f90695124f2200e3842f43c88676be69", "final_control_s43_fast_cpu.pth": "2ad813f829fd6bd287969c9405e9c1aaa55af9d6a6337d7b801fdf0818d8ac58"}, "thresholds_sha": "5f401c776a5a292fa11b2523ab620e0e10553026d01dc2c022b7b19f5194979b"}, "stage": "statistics_v2", "n_boot": 300}

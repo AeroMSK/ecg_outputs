@@ -1,3 +1,0 @@
-seed,ckpt,val_auc,val_f1,val_precision,val_recall
-42,final_control_s42_fast_cpu.pth,0.9473,0.6906,0.6565,0.8247
-43,final_control_s43_fast_cpu.pth,0.947,0.6535,0.5913,0.7978

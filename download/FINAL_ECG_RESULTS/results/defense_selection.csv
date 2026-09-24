@@ -1,4 +1,0 @@
-defense,fixed_policy,fixed_clean_auc,fixed_clean_f1,best_policy,best_clean_auc,best_clean_f1,adaptive_auc,adaptive_f1,prd
-none,perclass_f1,0.9473,0.7148,perclass_f1,0.9473,0.7148,0.9346,0.5695,0.0
-FixedDWT,perclass_f1,0.9466,0.7234,perclass_f1,0.9466,0.7234,0.9325,0.6213,5.33
-AWARD,perclass_f1,0.9473,0.7219,perclass_f1,0.9473,0.7219,0.9381,0.6747,3.14
